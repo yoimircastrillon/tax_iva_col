@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú Principal de Reporte IVA-300 -->
+    <menuitem id="menu_tax_iva_col_root" 
+              name="Reporte IVA-300" 
+              parent="account.menu_finance_reports" 
+              sequence="50"/>
+              
+    <!-- Submenú para Conceptos -->
+    <menuitem id="menu_tax_iva_concept" 
+              name="Conceptos" 
+              parent="menu_tax_iva_col_root" 
+              action="tax_iva_concept_action" 
+              sequence="10"/>
+              
+    <!-- Submenú para Generar Reporte -->
+    <menuitem id="menu_tax_iva_report" 
+              name="Generar Reporte" 
+              parent="menu_tax_iva_col_root" 
+              action="tax_iva_report_wizard_action" 
+              sequence="20"/>
+</odoo>

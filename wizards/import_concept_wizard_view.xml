@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de formulario para el wizard de importación -->
+    <record id="view_import_concept_wizard_form" model="ir.ui.view">
+        <field name="name">import.concept.wizard.form</field>
+        <field name="model">import.concept.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar Conceptos desde Excel">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <p><strong>Instrucciones:</strong></p>
+                        <p>Seleccione un archivo Excel con los conceptos a importar. El archivo debe tener los siguientes encabezados:</p>
+                        <ul>
+                            <li><strong>Código</strong>: Código único del concepto</li>
+                            <li><strong>Descripción</strong>: Descripción del concepto</li>
+                            <li><strong>Tipo de Operación</strong>: "Ventas" o "Compras"</li>
+                            <li><strong>Tipo de Valor</strong>: "Base", "Impuesto" o "Calculado"</li>
+                            <li><strong>Impuestos</strong>: Nombres de los impuestos, separados por comas</li>
+                            <li><strong>Fórmula de Cálculo</strong>: (Opcional) Fórmula para conceptos calculados (ejemplo: "25+11+5")</li>
+                        </ul>
+                    </div>
+                    <group>
+                        <field name="excel_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_import_concepts" string="Importar" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción para abrir el wizard -->
+    <record id="action_import_concept_wizard" model="ir.actions.act_window">
+        <field name="name">Importar Conceptos</field>
+        <field name="res_model">import.concept.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menú para abrir el wizard -->
+    <menuitem id="menu_import_concept"
+              name="Importar Conceptos"
+              parent="menu_tax_iva_col_root"
+              action="action_import_concept_wizard"
+              sequence="15"/>
+</odoo>

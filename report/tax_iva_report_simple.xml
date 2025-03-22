@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="tax_iva_simple_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="text-align: center;">Reporte IVA-300</h2>
+                    <p style="text-align: center;">Período: <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <div><strong>Empresa:</strong> <t t-esc="env.company.name"/></div>
+                        <div><strong>Fecha Generación:</strong> <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M:%S')"/></div>
+                        <div><strong>Usuario:</strong> <t t-esc="env.user.name"/></div>
+                    </div>
+                    
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Conceptos</th>
+                                <th style="width: 150px; text-align: right;">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos fijos para este demo -->
+                            <tr>
+                                <td>27 Por operaciones gravadas al 5%</td>
+                                <td style="text-align: right;">0</td>
+                            </tr>
+                            <tr>
+                                <td>28 Por operaciones gravadas a la tarifa general</td>
+                                <td style="text-align: right;">0</td>
+                            </tr>
+                            <tr>
+                                <td>29 AIU por operaciones gravadas (base gravable especial)</td>
+                                <td style="text-align: right;">0</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <td>TOTAL</td>
+                                <td style="text-align: right;">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

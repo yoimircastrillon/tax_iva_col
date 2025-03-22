@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tax_iva_concept_account_user,tax.iva.concept.account.user,model_tax_iva_concept,account.group_account_user,1,0,0,0
+access_tax_iva_concept_account_manager,tax.iva.concept.account.manager,model_tax_iva_concept,account.group_account_manager,1,1,1,1
+access_tax_iva_report_wizard_account_user,tax.iva.report.wizard.account.user,model_tax_iva_report_wizard,account.group_account_user,1,1,1,1
+access_tax_iva_report_view_account_user,tax.iva.report.view.account.user,model_tax_iva_report_view,account.group_account_user,1,1,1,1
+access_import_concept_wizard_account_manager,import.concept.wizard.account.manager,model_import_concept_wizard,account.group_account_manager,1,1,1,1

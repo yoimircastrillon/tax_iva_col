@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="tax_iva_simple_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <style>
+                        .report-title {
+                            text-align: center;
+                            font-size: 16px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                        .report-date {
+                            text-align: center;
+                            font-size: 14px;
+                            margin-bottom: 20px;
+                        }
+                        .report-meta {
+                            margin-bottom: 15px;
+                        }
+                        .report-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        .report-table th, .report-table td {
+                            padding: 8px;
+                            border: 1px solid #ddd;
+                        }
+                        .report-table th {
+                            background-color: #f8f8f8;
+                            text-align: left;
+                        }
+                        .right-align {
+                            text-align: right;
+                        }
+                        .total-row {
+                            font-weight: bold;
+                        }
+                    </style>
+                    
+                    <div class="report-title">
+                        Reporte IVA-300
+                    </div>
+                    
+                    <div class="report-date">
+                        <span t-esc="fecha_desde"/> - <span t-esc="fecha_hasta"/>
+                    </div>
+                    
+                    <div class="report-meta">
+                        <div><strong>Empresa:</strong> <span t-esc="empresa"/></div>
+                        <div><strong>Fecha Generación:</strong> <span t-esc="fecha_generacion"/></div>
+                        <div><strong>Usuario:</strong> <span t-esc="usuario"/></div>
+                    </div>
+                    
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Conceptos</th>
+                                <th style="width: 150px;">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="conceptos" t-as="concepto">
+                                <tr>
+                                    <td><span t-esc="concepto['codigo']"/> <span t-esc="concepto['descripcion']"/></td>
+                                    <td class="right-align">
+                                        <t t-if="concepto['es_nulo']">
+                                            <span style="color: white; background-color: black;">&amp;nbsp;</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="'{:,.0f}'.format(concepto['valor'])"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr class="total-row">
+                                <td>TOTAL</td>
+                                <td class="right-align"><span t-esc="'{:,.0f}'.format(total)"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

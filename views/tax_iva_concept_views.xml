@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Árbol -->
+    <record id="tax_iva_concept_view_tree" model="ir.ui.view">
+        <field name="name">tax.iva.concept.tree</field>
+        <field name="model">tax.iva.concept</field>
+        <field name="arch" type="xml">
+            <tree string="Conceptos">
+                <field name="code"/>
+                <field name="description"/>
+                <field name="operation_type"/>
+                <field name="value_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista Formulario -->
+    <record id="tax_iva_concept_view_form" model="ir.ui.view">
+        <field name="name">tax.iva.concept.form</field>
+        <field name="model">tax.iva.concept</field>
+        <field name="arch" type="xml">
+            <form string="Concepto">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="description"/>
+                            <field name="operation_type" widget="radio"/>
+                            <field name="value_type" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                        <group>
+                            <field name="tax_ids" widget="many2many_tags" domain="[('type_tax_use', '=', operation_type)]" options="{'no_create': True}" invisible="value_type == 'calculated'"/>
+                            <field name="calculation_formula" invisible="value_type != 'calculated'" required="value_type == 'calculated' and not calculated_concept_ids"/>
+                            <field name="calculated_concept_ids" widget="many2many_tags" invisible="value_type != 'calculated'"/>
+                        </group>
+                    </group>
+                    <!-- Ayuda acerca de los campos de cálculo -->
+                    <div class="alert alert-info" role="alert" invisible="value_type != 'calculated'">
+                        <p><strong>Información sobre los métodos de cálculo:</strong></p>
+                        <ul>
+                            <li><strong>Fórmula de Cálculo:</strong> Permite operaciones matemáticas usando los códigos de otros conceptos. Ejemplo: "25+11-5" sumará los conceptos 25 y 11, y restará el 5.</li>
+                            <li><strong>Conceptos para Cálculo:</strong> Permite seleccionar visualmente los conceptos que serán sumados (solo permite suma).</li>
+                            <li>Puede usar uno de los dos métodos o ambos. Si utiliza ambos, los resultados se sumarán.</li>
+                        </ul>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Búsqueda -->
+    <record id="tax_iva_concept_view_search" model="ir.ui.view">
+        <field name="name">tax.iva.concept.search</field>
+        <field name="model">tax.iva.concept</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Conceptos">
+                <field name="code"/>
+                <field name="description"/>
+                <filter string="Ventas" name="sales" domain="[('operation_type', '=', 'sale')]"/>
+                <filter string="Compras" name="purchases" domain="[('operation_type', '=', 'purchase')]"/>
+                <separator/>
+                <filter string="Base" name="base" domain="[('value_type', '=', 'base')]"/>
+                <filter string="Impuesto" name="tax" domain="[('value_type', '=', 'tax')]"/>
+                <filter string="Calculado" name="calculated" domain="[('value_type', '=', 'calculated')]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter string="Tipo de Operación" name="group_by_operation_type" context="{'group_by': 'operation_type'}"/>
+                    <filter string="Tipo de Valor" name="group_by_value_type" context="{'group_by': 'value_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción para Conceptos -->
+    <record id="tax_iva_concept_action" model="ir.actions.act_window">
+        <field name="name">Conceptos</field>
+        <field name="res_model">tax.iva.concept</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer concepto para el reporte IVA
+            </p>
+            <p>
+                Define los conceptos que se incluirán en el reporte IVA-300.
+                Cada concepto debe tener un código único, una descripción, un tipo de operación,
+                un tipo de valor y los impuestos asociados.
+            </p>
+        </field>
+    </record>
+</odoo>

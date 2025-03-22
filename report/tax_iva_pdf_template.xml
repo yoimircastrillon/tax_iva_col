@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="tax_iva_pdf_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <style>
+                        .report-title {
+                            text-align: center;
+                            font-size: 16px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                        .report-period {
+                            text-align: center;
+                            font-size: 13px;
+                            margin-bottom: 20px;
+                        }
+                        .report-meta {
+                            margin-bottom: 20px;
+                        }
+                        .report-meta div {
+                            margin-bottom: 5px;
+                        }
+                        .report-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+                        .report-table th, .report-table td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                        }
+                        .report-table th {
+                            background-color: #f8f8f8;
+                            text-align: left;
+                            font-weight: bold;
+                        }
+                        .value-cell {
+                            text-align: right;
+                        }
+                        .total-row {
+                            font-weight: bold;
+                        }
+                    </style>
+                    
+                    <div class="report-title">
+                        Reporte IVA-300
+                    </div>
+                    
+                    <div class="report-period">
+                        <t t-esc="date_from.strftime('%d-%m-%Y')"/> - <t t-esc="date_to.strftime('%d-%m-%Y')"/>
+                    </div>
+                    
+                    <div class="report-meta">
+                        <div><strong>Empresa:</strong> <t t-esc="company.name"/></div>
+                        <div><strong>Fecha Generación:</strong> <t t-esc="datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')"/></div>
+                        <div><strong>Usuario:</strong> <t t-esc="env.user.name"/></div>
+                    </div>
+                    
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Conceptos</th>
+                                <th style="width: 150px;">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="concepts" t-as="concept">
+                                <tr>
+                                    <td><t t-esc="concept['concept_text']"/></td>
+                                    <td class="value-cell">
+                                        <t t-if="concept['is_null']">
+                                            <span style="color: white; background-color: black;">_</span>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="'{:,.0f}'.format(concept['value'])"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr class="total-row">
+                                <td>TOTAL</td>
+                                <td class="value-cell"><t t-esc="'{:,.0f}'.format(total)"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

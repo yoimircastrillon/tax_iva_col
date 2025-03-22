@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="tax_iva_report_action" model="ir.actions.report">
+        <field name="name">Reporte IVA-300</field>
+        <field name="model">tax.iva.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tax_iva_col.tax_iva_report_template</field>
+        <field name="report_file">tax_iva_col.tax_iva_report_template</field>
+        <field name="print_report_name">'Reporte_IVA_300_%s_%s' % (object.date_from.strftime('%Y%m%d'), object.date_to.strftime('%Y%m%d'))</field>
+        <field name="binding_model_id" ref="model_tax_iva_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
